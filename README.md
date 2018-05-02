@@ -1,13 +1,16 @@
 # hatespeech
 
-
-important links:
+preprocessing / word vectors:
 
 https://github.com/facebookresearch/fastText/blob/master/python/README.md
 
 https://www.kaggle.com/mschumacher/using-fasttext-models-for-robust-embeddings/notebook
 
+scikit-fasttext-estimator:
+
 http://scikit-learn.org/stable/developers/contributing.html#rolling-your-own-estimator
+
+https://github.com/vishnumani2009/sklearn-fasttext
 
 more ideas:
 
