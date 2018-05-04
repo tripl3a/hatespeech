@@ -7,7 +7,7 @@ Created on Fri Apr 27 16:28:35 2018
 """
 
 from os import chdir
-chdir("/home/arndt/git-reps/nlp/01_hatespeech/")
+chdir("/home/arndt/git-reps/hatespeech/")
 
 import sklearn.metrics as skm
 import fastText
