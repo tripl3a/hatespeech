@@ -10,6 +10,8 @@ https://github.com/facebookresearch/fastText/issues/435
 
 scikit-fasttext-estimator:
 
+https://github.com/shaypal5/skift
+
 http://scikit-learn.org/stable/developers/contributing.html#rolling-your-own-estimator
 
 https://github.com/vishnumani2009/sklearn-fasttext
