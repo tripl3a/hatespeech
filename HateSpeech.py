@@ -9,8 +9,9 @@ Created on Fri Apr 27 16:28:35 2018
 import numpy as np
 import pandas as pd
 import sklearn.metrics as skm
-from os import chdir
-chdir("/home/arndt/git-reps/hatespeech/")
+from os import chdir, path
+
+chdir(path.dirname(path.abspath( __file__ )))
 
 df_test = pd.merge(pd.read_csv("data/test.csv"),
                    pd.read_csv("data/test_labels.csv"),
