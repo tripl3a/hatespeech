@@ -6,56 +6,58 @@ Created on Fri Apr 27 16:28:35 2018
 @author: alexei, arndt
 """
 
+import numpy as np
+import pandas as pd
+import sklearn.metrics as skm
 from os import chdir
 chdir("/home/arndt/git-reps/hatespeech/")
 
-import sklearn.metrics as skm
-import fastText
-import pandas as pd
-import csv
+df_test = pd.merge(pd.read_csv("data/test.csv"),
+                   pd.read_csv("data/test_labels.csv"),
+                   how="inner",
+                   on="id")
 
-df=pd.read_csv("data/kaggle-data.csv")
+df_train=pd.read_csv("data/train.csv")
 
 # data preperation
-df=df[["id","comment_text","toxic"]]
-df["label"]="__label__not_toxic"
-df.loc[df["toxic"]==1,"label"]="__label__toxic"
-df["comment_text"]=df["comment_text"].apply(str.replace,args=("\n"," "))
-df["comment_text"]=df["comment_text"].apply(str.replace,args=("\"",""))
+df_train=df_train[["id","comment_text","toxic"]]
+df_train["label"]="__label__not_toxic"
+df_train.loc[df_train["toxic"]==1,"label"]="__label__toxic"
+df_train["comment_text"]=df_train["comment_text"].apply(str.replace,args=("\n"," "))
+df_train["comment_text"]=df_train["comment_text"].apply(str.replace,args=("\"",""))
 
-def train_model(train_index, test_index):
-    df[["label","comment_text"]].iloc[train_index].to_csv("data/train_data.txt",index=False,sep=" ",header=False,escapechar=" ",quoting=csv.QUOTE_NONE)
-    df[["comment_text"]].iloc[test_index].to_csv("data/test_data.txt",index=False,sep=" ",header=False,escapechar=" ",quoting=csv.QUOTE_NONE)
-    return fastText.train_supervised("data/train_data.txt")
-    
-def score_model(model, test_index):
-    test_labels=df["label"].iloc[test_index].apply(str.replace,args=("__label__",""))
-    pred_labels=df["comment_text"].iloc[test_index].apply(lambda x:model.predict(x)[0][0]).apply(str.replace,args=("__label__",""))
-    print("confusion matrix:")
-    print(str(skm.confusion_matrix(test_labels, pred_labels)))
-    print(str(skm.classification_report(test_labels, pred_labels)))
-    print("f1 macro: %0.4f" % (skm.precision_recall_fscore_support(test_labels, pred_labels, average='macro')[2]))
-    print("f1 micro: %0.4f" % (skm.precision_recall_fscore_support(test_labels, pred_labels, average='micro')[2]))
-    print("\n")
+df_test["comment_text"]=df_test["comment_text"].apply(str.replace,args=("\n"," "))
+df_test["comment_text"]=df_test["comment_text"].apply(str.replace,args=("\"",""))
 
-def get_predictions(model, test_index, k=1):
-    df[["label","comment_text"]].iloc[test_index].to_csv("test_data.txt",index=False,sep=" ",header=False,escapechar=" ",quoting=csv.QUOTE_NONE)
-    return df["comment_text"].iloc[test_index].apply(lambda x:model.predict(x, k=k))
+X_train = pd.DataFrame(df_train.loc[:,"comment_text"])
+y_train = df_train.loc[:,"toxic"]
+X_test = pd.DataFrame(df_test[df_test["toxic"]>-1].loc[:,"comment_text"])
+y_test = df_test[df_test["toxic"]>-1].loc[:,"toxic"]
 
 #%%
 
-# Build multiple models using K-Folds
+# Single skift model
 
-import numpy as np
-from sklearn import model_selection
+import skift
 
-seed = 77
-kfold = model_selection.KFold(n_splits=3, random_state=seed)
-#kfold = model_selection.KFold(n_splits=3, shuffle=True)
+skift_clf = skift.FirstObjFtClassifier(lr=0.2)
+skift_clf.fit(X_train, y_train)
 
-for train_index, test_index in kfold.split(df):
-    model = train_model(train_index, test_index)
-    score_model(model, test_index)
+print("score on test data: %0.4f" % (skift_clf.score(X_test, y_test)))
+print("score on training data: %0.4f" % (skift_clf.score(X_train, y_train))) #model overfitting on training data?
 
+preds = skift_clf.predict(X_test)
+preds_proba = skift_clf.predict_proba(X_test)
 
+def score_preds(y_true, y_pred):
+    print("confusion matrix:")
+    print(str(skm.confusion_matrix(y_true, y_pred)))
+    print("classification report:")
+    print(str(skm.classification_report(y_true, y_pred)))
+    print("f1 macro: %0.4f" % (skm.precision_recall_fscore_support(y_true, y_pred, average='macro')[2]))
+    print("f1 micro: %0.4f" % (skm.precision_recall_fscore_support(y_true, y_pred, average='micro')[2]))
 
+score_preds(y_test, preds)
+
+#%%
+score_preds(y_test, np.zeros(y_test.shape)) #majority class classifier
