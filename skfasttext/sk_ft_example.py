@@ -11,7 +11,7 @@ Created on Wed May  2 17:34:43 2018
 # https://github.com/vishnumani2009/sklearn-fasttext
 
 from os import chdir
-chdir("/home/arndt/git-reps/nlp/01_hatespeech/")
+chdir("/home/arndt/git-reps/hatespeech/")
 from skfasttext import SimpleFastTextClassifier
 
 # files were previously created in the HateSpeech.py script
