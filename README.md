@@ -27,7 +27,7 @@ https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge
 
 # preprocessing! 
 
-based on the [NLP Competition] (https: //becominghuman. ai/my-solution-to-achieve-top-1-in-a-novel-data-science-nlp-competition-db8db2ee356a) link suggested by Arndt.
+based on the [NLP Competition](https: //becominghuman. ai/my-solution-to-achieve-top-1-in-a-novel-data-science-nlp-competition-db8db2ee356a) link suggested by Arndt.
 
 ## General Idea
 
