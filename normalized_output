@@ -1,0 +1,28 @@
+score on test data: 0.9250
+score on training data: 0.9813
+confusion matrix:
+[[54732  3156]
+ [ 1641  4449]]
+classification report:
+             precision    recall  f1-score   support
+
+          0       0.97      0.95      0.96     57888
+          1       0.59      0.73      0.65      6090
+
+avg / total       0.93      0.93      0.93     63978
+
+f1 macro: 0.8039
+f1 micro: 0.9250
+confusion matrix:
+[[57888     0]
+ [ 6090     0]]
+classification report:
+             precision    recall  f1-score   support
+
+          0       0.90      1.00      0.95     57888
+          1       0.00      0.00      0.00      6090
+
+avg / total       0.82      0.90      0.86     63978
+
+f1 macro: 0.4750
+f1 micro: 0.9048
