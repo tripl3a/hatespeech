@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import sklearn.metrics as skm
 from os import chdir, path
+import fastText as ft
 
 chdir(path.dirname(path.abspath( __file__ )))
 
@@ -40,6 +41,22 @@ y_test = df_test[df_test["toxic"]>-1].loc[:,"toxic"]
 # Single skift model
 
 import skift
+#import skfasttext as skft
+
+def print_results(N, p, r):
+    print("Number of documents\t" + str(N))
+    print("Precision@{}\t{:.3f}".format(1, p))
+    print("Recall@{}\t{:.3f}".format(1, r))
+
+
+wiki_model = ft.train_supervised(input="data/train_data.txt", pretrainedVectors="data/wiki.en/wiki.en.vec", dim=300)
+
+# Prints results with test and training data
+print(" \n\n Results with Pre-trained vectors from wikipedia \n ")
+print_results(*wiki_model.test("data/test.txt"))
+print("\n Results with the trained data \n ")
+print_results(*wiki_model.test("data/train.txt"))
+
 
 skift_clf = skift.FirstObjFtClassifier(lr=0.2)
 skift_clf.fit(X_train, y_train)
