@@ -13,12 +13,12 @@ import sklearn.metrics as skm
 from os import chdir
 chdir("/home/arndt/git-reps/hatespeech/")
 
-df_test = pd.merge(pd.read_csv("data/test.csv"),
+df_test = pd.merge(pd.read_csv("data/test_unidecode.csv"),
                    pd.read_csv("data/test_labels.csv"),
                    how="inner",
                    on="id")
 
-df_train=pd.read_csv("data/train.csv")
+df_train=pd.read_csv("data/train_unidecode.csv")
 
 # data preperation
 df_train=df_train[["id","comment_text","toxic"]]
@@ -136,10 +136,6 @@ bg.fit(X_train, y_train) #error, numerical array is expected
 
 # Oversampling (the minority class)
 
-from collections import Counter
-print(sorted(Counter(y_train).items()))
-print(y_train.count())
-
 def oversample(X, y, p_oversample_size, p_oversample_ratio, random_state):
     y_true_idx = y[y==1].index
     y_false_idx = y[y==0].index
@@ -156,6 +152,10 @@ def oversample(X, y, p_oversample_size, p_oversample_ratio, random_state):
     y_resampled = y.loc[X_resampled.index]
     return X_resampled, y_resampled
 
+from collections import Counter
+print(sorted(Counter(y_train).items()))
+print(y_train.count())
+
 seed = 77
 X_resampled, y_resampled = oversample(X_train, y_train, 1, 0.15, seed)
 print(sorted(Counter(y_resampled).items()))
@@ -164,17 +164,14 @@ print(y_resampled.count())
 #%%
 
 # Oversampling different fractions and score
-
-classifiers = list()
-
+oversample_clfs = list()
 for f in list(np.arange(0.08,0.11,0.0025)):
     X_resampled, y_resampled = oversample(X_train, y_train, 1.25, f, seed)
     skift_clf = skift.FirstObjFtClassifier(lr=0.2)
     skift_clf.fit(X_resampled, y_resampled)
     print("oversampling fraction: %0.4f // score: %0.4f" % (f, skift_clf.score(X_test, y_test)))
-    classifiers.append(skift_clf)
-
-score_preds(y_test, ensemble_predict(classifiers, X_test))
+    oversample_clfs.append(skift_clf)
+score_preds(y_test, ensemble_predict(oversample_clfs, X_test))
 
 #%%
 

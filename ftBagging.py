@@ -40,9 +40,9 @@ predictions_proba = model.predict_proba(x_test)
 # Bagging
 
 bg = BaggingClassifier(SimpleFastTextClassifier(), n_estimators=3)
-bg.fit(x_train, y_train)
+bg.fit(list(x_train), list(y_train))
 
-
-
+#x_train = pd.DataFrame(x_train, dtype = "str")
+#x_train.values.dtype
 
 

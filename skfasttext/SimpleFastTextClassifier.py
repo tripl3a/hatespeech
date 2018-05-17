@@ -17,7 +17,8 @@ class SimpleFastTextClassifier(BaseEstimator,ClassifierMixin):
 
     def fit(self, X, y):
         # Check that X and y have correct shape
-        X, y = check_X_y(X.values.reshape(-1, 1), y, dtype="str")
+        #X, y = check_X_y(X.values.reshape(-1, 1), y, dtype="str")
+        X, y = check_X_y(X, y)
         # Store the classes seen during fit
         self.classes_ = unique_labels(y)
         
