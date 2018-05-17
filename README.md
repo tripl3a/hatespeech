@@ -109,5 +109,5 @@ with open('out_copy.csv', 'r') as f, open('data_unidecode.csv', 'a') as write_fi
 
 # Google Dashboard 
 
-
+![Dashboard](hatespeech/Screen Shot 2018-05-14 at 00.43.05.png)
 
