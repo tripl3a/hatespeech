@@ -6,6 +6,8 @@ https://github.com/facebookresearch/fastText/blob/master/python/README.md
 
 https://www.kaggle.com/mschumacher/using-fasttext-models-for-robust-embeddings/notebook
 
+https://www.kaggle.com/sbongo/do-pretrained-embeddings-give-you-the-extra-edge/code
+
 https://github.com/facebookresearch/fastText/issues/435
 
 scikit-fasttext-estimator:
@@ -19,6 +21,10 @@ https://github.com/vishnumani2009/sklearn-fasttext
 more ideas:
 
 https://becominghuman.ai/my-solution-to-achieve-top-1-in-a-novel-data-science-nlp-competition-db8db2ee356a
+
+https://www.kaggle.com/jagangupta/lessons-from-toxic-blending-is-the-new-sexy/code
+
+https://www.kaggle.com/yekenot/pooled-gru-fasttext
 
 the kaggle challenge:
 
