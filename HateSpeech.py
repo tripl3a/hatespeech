@@ -12,7 +12,7 @@ import sklearn.metrics as skm
 from os import chdir, path
 import fastText as ft
 
-chdir(path.dirname(path.abspath( __file__ )))
+chdir(path.dirname(path.abspath( '__file__ ')))
 df_test = pd.merge(pd.read_csv("data/test_unidecode.csv"),
                    pd.read_csv("data/test_labels.csv"),
                    how="inner",
