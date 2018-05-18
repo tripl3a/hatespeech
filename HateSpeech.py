@@ -60,8 +60,8 @@ print("\n Results with the trained data \n ")
 print_results(*wiki_model.test("data/train.txt"))
 '''
 
-skift_clf = skift.FirstObjFtClassifier(wordNgrams=2, maxn=3)#, pretrainedVectors="data/wiki-news-300d-1M-subword.vec,"
-                                                         #"data/wiki.en/wiki.en.vec,data/crawl-300d-2M.vec", dim=300)
+skift_clf = skift.FirstObjFtClassifier(wordNgrams=2, maxn=3, pretrainedVectors="data/wiki-news-300d-1M-subword.vec,"
+                                                         "data/wiki.en/wiki.en.vec,data/crawl-300d-2M.vec", dim=300)
 skift_clf.fit(X_train,y_train)
 #skift_clf = skift.FirstObjFtClassifier(minn=3, maxn=3)
 #skift_clf.fit(X_train, y_train)
